@@ -1,26 +1,32 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-const Tabs = () => {
+// UpperTab component that manages tabbed content
+const topTab = () => {
+  // State to manage the active tab and cached content
   const [toggleState, setToggleState] = useState(1);
   const [tabContent, setTabContent] = useState({});
 
+  // Function to toggle tabs and fetch content for the selected tab
   const toggleTab = (index) => {
-    setToggleState(index);
-    fetchTabContent(index);
+    setToggleState(index); // Set the active tab state
+    fetchTabContent(index); // Fetch content for the selected tab
   };
 
+  // Fetch tab content based on the selected index
   const fetchTabContent = async (index) => {
-    if (tabContent[index]) return; // Use cached data if available
+    // Return early if content for the tab is already cached
+    if (tabContent[index]) return;
 
     try {
+      // Define length options corresponding to the API endpoints
       const lengths = ["short", "medium", "long", "verylong"];
-      const response = await axios.get(
-        `/api/1/${lengths[index - 1]}/plaintext`
-      );
+      const response = await axios.get(`/api/1/${lengths[index - 1]}/plaintext`);
 
-      const content = await response.text();
+      // Parse the response data
+      const content = await response.data; // Use response.data for JSON data
 
+      // Cache the fetched content
       setTabContent((prevContent) => ({
         ...prevContent,
         [index]: content,
@@ -30,12 +36,14 @@ const Tabs = () => {
     }
   };
 
+  // Effect to fetch content when the active tab changes
   useEffect(() => {
     fetchTabContent(toggleState);
   }, [toggleState]);
 
   return (
     <div className="container">
+      {/* Tab navigation buttons */}
       <div className="bloc-tabs">
         {[1, 2, 3, 4].map((i) => (
           <button
@@ -48,6 +56,7 @@ const Tabs = () => {
         ))}
       </div>
 
+      {/* Tab content display */}
       <div className="content-tabs">
         {[1, 2, 3, 4].map((i) => (
           <div
@@ -56,8 +65,6 @@ const Tabs = () => {
           >
             <h2>Title {i}</h2>
             <p>{tabContent[i] || "Loading content..."}</p>
-
-            {tabContent && <p>{tabContent[i] || "Loading content..."}</p>}
           </div>
         ))}
       </div>
@@ -65,4 +72,4 @@ const Tabs = () => {
   );
 };
 
-export default Tabs;
+export default topTab;
