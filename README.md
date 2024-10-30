@@ -1,3 +1,8 @@
+
+# Tewodros Berhanu 
+# +251 947 087 598
+# Email : tewodros.berhanu@walletbirr.com
+
 # react-tabs-challenge
 
 Implement the Following `Tabs` Component
