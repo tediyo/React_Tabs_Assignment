@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 // UpperTab component that manages tabbed content
-const topTab = () => {
+const UpperTab = () => {
   // State to manage the active tab and cached content
   const [toggleState, setToggleState] = useState(1);
   const [tabContent, setTabContent] = useState({});
@@ -72,4 +72,4 @@ const topTab = () => {
   );
 };
 
-export default topTab;
+export default UpperTab;
